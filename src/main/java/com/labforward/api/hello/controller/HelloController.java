@@ -38,4 +38,11 @@ public class HelloController {
 	public Greeting createGreeting(@RequestBody Greeting request) {
 		return helloWorldService.createGreeting(request);
 	}
+
+	@RequestMapping(value = "/hello/{id}", method = RequestMethod.PUT)
+	public Greeting updateGreeting(@PathVariable String id , @RequestBody Greeting request) {
+		Greeting greeting = new Greeting(id, request.getMessage());
+		helloWorldService.getGreeting(id).orElseThrow(() -> new ResourceNotFoundException(GREETING_NOT_FOUND));
+		return helloWorldService.updateGreeting(greeting);
+	}
 }

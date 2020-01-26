@@ -49,4 +49,24 @@ public class HelloWorldServiceTest {
 		Greeting created = helloService.createGreeting(request);
 		Assert.assertEquals(HELLO_LUKE, created.getMessage());
 	}
+
+	@Test
+	public void updateGreetingWhenValidRequest(){
+		final  String UPDATED_HELLO = "Updated Hello";
+		Greeting greeting =  createTestHelloGreeting();
+		Greeting request = new Greeting(UPDATED_HELLO);
+		Greeting updated = helloService.updateGreeting(request);
+		Assert.assertEquals(UPDATED_HELLO, updated.getMessage());
+	}
+
+	@Test(expected = EntityValidationException.class)
+	public void updateGreetingWithNullMessageThrowsException() {
+		Greeting greeting =  createTestHelloGreeting();
+		helloService.updateGreeting(new Greeting(null));
+	}
+
+	private Greeting createTestHelloGreeting(){
+		Greeting greeting = new Greeting("Hello");
+		return  greeting;
+	}
 }
